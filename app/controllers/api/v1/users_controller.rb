@@ -11,11 +11,16 @@ class Api::V1::UsersController < ApplicationController
     end
     
     def show
-        render json: User.find(params[:id])
+        @user = User.find(user_params_id[:id])
+        render json: @user
     end
 
     private
     def user_params
         params.require(:user).permit(:email, :password)
+    end
+
+    def user_params_id
+        params.require(:user).permit(:id, :email, :password)
     end
 end
