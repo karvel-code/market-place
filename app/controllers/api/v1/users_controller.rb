@@ -15,6 +15,15 @@ class Api::V1::UsersController < ApplicationController
         render json: @user
     end
 
+    def update
+        @user = User.find(user_params_id[:id])
+         if @user.update(email: user_params_id[:email], password: user_params_id[:password])
+            render json: @user, status: :ok
+         else
+            render json: @user.errors, status: :unprocessable_entity
+         end
+    end
+
     private
     def user_params
         params.require(:user).permit(:email, :password)
